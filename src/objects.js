@@ -21,8 +21,10 @@ export class Ship {
   }
 };
 
-export class Gameboard {
-  placeShips(coord1, coord2) {
+export const Gameboard = () => {
+  const misses = [];
+
+  const placeShips = (coord1, coord2) => {
     const carrier = new Ship(6);
     const battleship = new Ship(4);
     const cruiser = new Ship(3);
@@ -33,6 +35,16 @@ export class Gameboard {
     carrier.coordinates.coord2 = coord2;
     return carrier.coordinates;
   }
+
+  const receiveAttack = (coord) => {
+    if (coord === carrier.coordinates) {
+      carrier.hit();
+    } else {
+      misses.push(coord);
+    }
+  }
+
+  return { placeShips, receiveAttack };
 
   /* createBoard() {
     for (let i = 0; i < 10; i++) {
