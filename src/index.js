@@ -1,3 +1,3 @@
-import { Ship } from './ship-object';
+import * as objects from './objects';
 
-export const ship = new Ship(4, 4, false);
+export const carrier = new objects.Ship(5, 4, false);
