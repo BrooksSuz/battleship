@@ -1,10 +1,12 @@
-import { carrier } from './index';
-
 export class Ship {
-  constructor(shipLength, hits, sunk) {
+  constructor(shipLength) {
     this.shipLength = shipLength;
-    this.hits = hits;
-    this.sunk = sunk;
+    this.hits = 0;
+    this.sunk = false;
+    this.coordinates = {
+      coord1: null,
+      coord2: null
+    };
   }
 
   hit() {
@@ -20,12 +22,16 @@ export class Ship {
 };
 
 export class Gameboard {
-  constructor(ship) {
-    this.ship = ship;
-  }
+  placeShips(coord1, coord2) {
+    const carrier = new Ship(6);
+    const battleship = new Ship(4);
+    const cruiser = new Ship(3);
+    const submarine = new Ship(3);
+    const destroyer = new Ship(2);
 
-  placeShip() {
-
+    carrier.coordinates.coord1 = coord1;
+    carrier.coordinates.coord2 = coord2;
+    return carrier.coordinates;
   }
 
   /* createBoard() {
