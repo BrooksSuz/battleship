@@ -33,26 +33,28 @@ export class Gameboard {
   }
 
   receiveAttack(coord) {
-    for (const ship in Gameboard) {
-      if (coord === (ship.coordinates.coord1 || ship.coordinates.coord2)) {
-        ship.hit();
-        ship.isSunk();
-      } else {
-        this.misses.push(coord);
-      }
-    }
-  }
+    const arrShip = [
+      this.carrier,
+      this.battleship,
+      this.cruiser,
+      this.submarine,
+      this.destroyer,
+      this.testBoat
+    ];
 
-  /* createBoard() {
-    for (let i = 0; i < 10; i++) {
-      let row = document.createElement('div');
-      row.classList.add('row');
-      for (let j = 0; j < 10; j++) {
-        let square = document.createElement('div');
-        square.classList.add('square');
-        row.appendChild(square);
+    arrShip.forEach(ship => {
+      const shipCoords1 = ship.coordinates.coord1;
+      const shipCoords2 = ship.coordinates.coord2;
+      
+      if (shipCoords1[0] === coord[0] && shipCoords1[1] === coord[1]) {
+        ship.hit();
+        return null;
+      } else if (shipCoords2[0] === coord[0] && shipCoords2[1] === coord[1]) {
+        ship.hit();
+        return null;
       }
-      document.querySelector('.container').appendChild(row);
-    }
-  } */
+    });
+
+    this.misses.push(coord);
+  }
 };

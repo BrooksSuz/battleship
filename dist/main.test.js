@@ -29,8 +29,17 @@ describe('Gameboard Object', () => {
   test('Testboat placed?', () => {
     expect(gameBoard.testBoat).toBeDefined();
   });
-  test('Attack hit?', () => {
+  test('Attack hit first coordinate?', () => {
     gameBoard.receiveAttack([1, 3]);
     expect(gameBoard.testBoat.hits).toEqual(7);
+  });
+  test('Attack hit second coordinate?', () => {
+    gameBoard.receiveAttack([1, 9]);
+    expect(gameBoard.testBoat.hits).toEqual(8);
+  });
+  test('And if we miss?', () => {
+    gameBoard.misses = [];
+    gameBoard.receiveAttack([1, 2]);
+    expect(gameBoard.misses).toStrictEqual([[1, 2]]);
   });
 });
