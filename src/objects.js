@@ -14,7 +14,7 @@ export class Ship {
   }
 
   isSunk() {
-    if (this.shipLength <= this.hits) {
+    if (this.shipLength === this.hits) {
       this.sunk = true;
       return this.sunk;
     }
@@ -30,6 +30,13 @@ export class Gameboard {
     this.destroyer = new Ship(2);
     this.testBoat = new Ship(6);
     this.misses = [];
+    this.sunkCount = 0;
+  }
+
+  allShipsSunk() {
+    if (this.sunkCount === 5) {
+      return 'You lose';
+    }
   }
 
   receiveAttack(coord) {
@@ -46,15 +53,36 @@ export class Gameboard {
       const shipCoords1 = ship.coordinates.coord1;
       const shipCoords2 = ship.coordinates.coord2;
       
-      if (shipCoords1[0] === coord[0] && shipCoords1[1] === coord[1]) {
-        ship.hit();
-        return null;
-      } else if (shipCoords2[0] === coord[0] && shipCoords2[1] === coord[1]) {
-        ship.hit();
-        return null;
+      // Horizontal logic
+      if ((shipCoords1[0] === shipCoords2[0])
+      && (coord[0] === shipCoords1[0])) {
+        if ((coord[1] >= shipCoords1[1])
+        && (coord[1] <= shipCoords2[1])) {
+          ship.hit();
+          ship.isSunk();
+          if (ship.sunk) {
+            this.sunkCount += 1;
+            this.allShipsSunk();
+          }
+          return null;
+        } 
+      // Vertical logic
+      } else if ((shipCoords1[1] === shipCoords2[1])
+      && (coord[1] === shipCoords1[1])) {
+        if ((coord[0] >= shipCoords1[0])
+        && (coord[0] <= shipCoords2[0])) {
+          ship.hit();
+          ship.isSunk();
+          if (ship.sunk) {
+            this.sunkCount += 1;
+            this.allShipsSunk();
+          }
+          return null;
+        }
       }
     });
 
+    // On miss, push coord to misses array
     this.misses.push(coord);
   }
 };

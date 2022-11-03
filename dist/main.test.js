@@ -8,6 +8,7 @@ describe('Ship Object', () => {
   });
   test('Add a hit?', () => {
     expect(gameBoard.testBoat.hit()).toEqual(1);
+    gameBoard.testBoat.hits = 0;
   });
   test('Did we sink?', () => {
     expect(gameBoard.testBoat.isSunk()).toBeFalsy();
@@ -18,7 +19,10 @@ describe('Ship Object', () => {
     gameBoard.testBoat.hit();
     gameBoard.testBoat.hit();
     gameBoard.testBoat.hit();
+    gameBoard.testBoat.hit();
     expect(gameBoard.testBoat.isSunk()).toBeTruthy();
+    gameBoard.testBoat.hits = 0;
+    gameBoard.testBoat.sunk = false;
   });
 });
 
@@ -31,15 +35,23 @@ describe('Gameboard Object', () => {
   });
   test('Attack hit first coordinate?', () => {
     gameBoard.receiveAttack([1, 3]);
-    expect(gameBoard.testBoat.hits).toEqual(7);
+    expect(gameBoard.testBoat.hits).toEqual(1);
+    gameBoard.testBoat.hits = 0;
   });
   test('Attack hit second coordinate?', () => {
     gameBoard.receiveAttack([1, 9]);
-    expect(gameBoard.testBoat.hits).toEqual(8);
+    expect(gameBoard.testBoat.hits).toEqual(1);
+    gameBoard.testBoat.hits = 0;
   });
   test('And if we miss?', () => {
     gameBoard.misses = [];
     gameBoard.receiveAttack([1, 2]);
-    expect(gameBoard.misses).toStrictEqual([[1, 2]]);
+    expect(gameBoard.misses).toEqual([[1, 2]]);
+    gameBoard.misses = [];
+  });
+  test('All ships sunk?', () => {
+    gameBoard.sunkCount = 4;
+    gameBoard.sunkCount++;
+    expect(gameBoard.allShipsSunk()).toBe('You lose');
   });
 });
