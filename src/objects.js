@@ -86,3 +86,43 @@ export class Gameboard {
     this.misses.push(coord);
   }
 };
+
+export class Player {
+  constructor(playerName) {
+    this.playerBoard = new Gameboard();
+    this.playerName = playerName;
+    this.yourTurn = false;
+  }
+
+  startTurn() {
+    if (this.yourTurn) {
+      this.giveAttack();
+    }
+  }
+
+  playerBegin() {
+    if (this.playerName !== 'Computer') {
+      this.yourTurn = true;
+      return this.giveAttack();
+    }
+  }
+
+  giveAttack(attack = [1, 2]) {
+    this.yourTurn = false;
+    return attack;
+  }
+}
+
+export class Computer extends Player {
+  constructor(playerName) {
+    super(playerName);
+    this.playerName = 'Computer';
+  }
+
+  randomAttack() {
+    this.yourTurn = false;
+    const random = Math.floor(Math.random() * 10);
+    let coord1 = random;
+    let coord2 = random;
+  }
+}
