@@ -29,8 +29,6 @@ export class Gameboard {
     this.submarine = new Ship(3);
     this.destroyer = new Ship(2);
     this.testBoat = new Ship(6);
-    this.misses = [];
-    this.sunkCount = 0;
     this.arrShip = [
       this.carrier,
       this.battleship,
@@ -39,6 +37,8 @@ export class Gameboard {
       this.destroyer,
       this.testBoat
     ];
+    this.misses = [];
+    this.sunkCount = 0;
   }
 
   allShipsSunk() {
@@ -84,7 +84,7 @@ export class Gameboard {
       }
     });
 
-    // On miss, push coord to misses array
+    // On a miss, push the coord to misses array
     this.misses.push(coord);
   }
 }
@@ -103,7 +103,6 @@ export class Human extends Player {
   }
 
   giveAttack(attack) {
-    this.yourTurn = false;
     return attack;
   }
 }
@@ -121,7 +120,6 @@ export class Computer extends Player {
     let coord2 = random();
 
     if (arrMiss.length === 0) {
-      this.yourTurn = false;
       return [coord1, coord2];
     }
 
@@ -132,8 +130,6 @@ export class Computer extends Player {
         i--;
       }
     }
-
-    this.yourTurn = false;
     return [coord1, coord2];
   }
 }
