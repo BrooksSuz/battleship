@@ -19,7 +19,7 @@ export class Ship {
       return this.sunk;
     }
   }
-};
+}
 
 export class Gameboard {
   constructor() {
@@ -85,19 +85,19 @@ export class Gameboard {
     // On miss, push coord to misses array
     this.misses.push(coord);
   }
-};
+}
 
 export class Player {
   constructor(playerName) {
     this.playerBoard = new Gameboard();
     this.playerName = playerName;
-    this.yourTurn = false;
   }
+}
 
-  startTurn() {
-    if (this.yourTurn) {
-      this.giveAttack();
-    }
+export class Human extends Player {
+  constructor(playerName) {
+    super(playerName);
+    this.yourTurn = true;
   }
 
   playerBegin() {
@@ -114,15 +114,30 @@ export class Player {
 }
 
 export class Computer extends Player {
-  constructor(playerName) {
+  constructor(playerName = 'Computer') {
     super(playerName);
-    this.playerName = 'Computer';
+    this.yourTurn = false;
   }
 
   randomAttack() {
+    const arrMiss = this.playerBoard.misses;
+    const random = () => Math.floor(Math.random() * 10);
+    let coord1 = random();
+    let coord2 = random();
+
+    if (arrMiss.length === 0) {
+      return [coord1, coord2];
+    }
+
+    for (let i = 0; i < arrMiss.length; i++) {
+      if ((arrMiss[i][0] === coord1) && (arrMiss[i][1] === coord2)) {
+        coord1 = random();
+        coord2 = random();
+        i--;
+      }
+    }
+
     this.yourTurn = false;
-    const random = Math.floor(Math.random() * 10);
-    let coord1 = random;
-    let coord2 = random;
+    return [coord1, coord2];
   }
 }

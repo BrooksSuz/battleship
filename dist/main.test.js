@@ -1,6 +1,8 @@
 import * as objects from '../src/objects';
 
 const gameBoard = new objects.Gameboard();
+const humanPlayer = new objects.Human('Brooks');
+const computerPlayer = new objects.Computer();
 
 describe('Ship Object', () => {
   test('Testboat created?', () => {
@@ -53,5 +55,20 @@ describe('Gameboard Object', () => {
     gameBoard.sunkCount = 4;
     gameBoard.sunkCount++;
     expect(gameBoard.allShipsSunk()).toBe('You lose');
+  });
+});
+
+describe('Player Object', () => {
+  test('Human test fire', () => {
+    expect(humanPlayer.giveAttack()).toContain(1 && 2);
+  });
+  test('Computer test fire', () => {
+    const value = computerPlayer.randomAttack();
+    expect(Array.isArray(value)).toBeTruthy();
+  });
+  test('Will computer reroll if a used shot is fired?', () => {
+    const arrMiss = computerPlayer.playerBoard.misses;
+    arrMiss.push([5, 3]);
+    expect(computerPlayer.randomAttack()).not.toBe([5, 3]);
   });
 });
