@@ -35,8 +35,9 @@ export class Gameboard {
 
   allShipsSunk() {
     if (this.sunkCount === 5) {
-      return 'You lose';
+      return true;
     }
+    return false;
   }
 
   receiveAttack(coord) {
@@ -98,13 +99,6 @@ export class Human extends Player {
   constructor(playerName) {
     super(playerName);
     this.yourTurn = true;
-  }
-
-  playerBegin() {
-    if (this.playerName !== 'Computer') {
-      this.yourTurn = true;
-      return this.giveAttack();
-    }
   }
 
   giveAttack(attack = [1, 2]) {

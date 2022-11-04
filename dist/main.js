@@ -1,1 +1,0 @@
-(()=>{"use strict";console.log(humanPlayer),console.log(computerPlayer)})();
