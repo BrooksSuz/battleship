@@ -31,6 +31,14 @@ export class Gameboard {
     this.testBoat = new Ship(6);
     this.misses = [];
     this.sunkCount = 0;
+    this.arrShip = [
+      this.carrier,
+      this.battleship,
+      this.cruiser,
+      this.submarine,
+      this.destroyer,
+      this.testBoat
+    ];
   }
 
   allShipsSunk() {
@@ -41,14 +49,7 @@ export class Gameboard {
   }
 
   receiveAttack(coord) {
-    const arrShip = [
-      this.carrier,
-      this.battleship,
-      this.cruiser,
-      this.submarine,
-      this.destroyer,
-      this.testBoat
-    ];
+    const arrShip = this.arrShip;
 
     arrShip.forEach(ship => {
       const shipCoords1 = ship.coordinates.coord1;
@@ -101,7 +102,7 @@ export class Human extends Player {
     this.yourTurn = true;
   }
 
-  giveAttack(attack = [1, 2]) {
+  giveAttack(attack) {
     this.yourTurn = false;
     return attack;
   }
@@ -120,6 +121,7 @@ export class Computer extends Player {
     let coord2 = random();
 
     if (arrMiss.length === 0) {
+      this.yourTurn = false;
       return [coord1, coord2];
     }
 

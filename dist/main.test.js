@@ -54,13 +54,13 @@ describe('Gameboard Object', () => {
   test('All ships sunk?', () => {
     gameBoard.sunkCount = 4;
     gameBoard.sunkCount++;
-    expect(gameBoard.allShipsSunk()).toBe('You lose');
+    expect(gameBoard.allShipsSunk()).toBeTruthy;
   });
 });
 
 describe('Player Object', () => {
   test('Human test fire', () => {
-    expect(humanPlayer.giveAttack()).toContain(1 && 2);
+    expect(humanPlayer.giveAttack([1, 2])).toContain(1 && 2);
   });
   test('Computer test fire', () => {
     const value = computerPlayer.randomAttack();
